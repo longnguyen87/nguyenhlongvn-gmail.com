@@ -7,40 +7,40 @@ import javax.persistence.EntityManager;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import springmvc.domain.Product;
-import springmvc.services.ProductService;
+import springmvc.domain.security.Role;
+import springmvc.services.RoleService;
 
 @Service
 @Profile("jpadao")
-public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
+public class RoleServiceJpaImpl extends AbstractJpaDaoService implements RoleService {
 
 	@Override
-	public List<Product> listAll() {
+	public List<Role> listAll() {
 		EntityManager em = emf.createEntityManager();
-		return em.createQuery("from Product", Product.class).getResultList();
+		return em.createQuery("from Role", Role.class).getResultList();
 	}
 
 	@Override
-	public Product getById(Integer id) {
+	public Role getById(Integer id) {
 		EntityManager em = emf.createEntityManager();
-		return em.find(Product.class, id);
+		return em.find(Role.class, id);
 	}
 
 	@Override
-	public Product saveOrUpdate(Product domainObject) {
+	public Role saveOrUpdate(Role domainObject) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Product saveProduct = em.merge(domainObject);
+		Role saveRole = em.merge(domainObject);
 		em.getTransaction().commit();
-		return saveProduct;
+		return saveRole;
+
 	}
 
 	@Override
 	public void delete(Integer id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(em.find(Product.class, id));
+		em.remove(em.find(Role.class, id));
 		em.getTransaction().commit();
 	}
-
 }
